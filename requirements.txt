@@ -1,0 +1,5 @@
+RPI.GPIO
+adafruit-blinka
+rpi_ws281x
+adafruit-circuitpython-neopixel
+azure-iot-device
