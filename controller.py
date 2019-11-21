@@ -14,7 +14,7 @@ iotc = iotc.Device(scopeId, deviceKey, deviceId, IOTConnectType.IOTC_CONNECT_SYM
 iotc.setLogLevel(IOTLogLevel.IOTC_LOGGING_API_ONLY)
 
 pixel_count = 20
-pixels = neopixel.NeoPixel(board.D18, pixel_count, auto_write=False, brightness=0.5)
+pixels = neopixel.NeoPixel(board.D18, pixel_count, auto_write=False)
 
 gCanSend = False
 gCounter = 0
