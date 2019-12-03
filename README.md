@@ -87,7 +87,7 @@ This build requires a small amount of programming in Python. It will use [IoT Ce
 
 ### Building the sweater
 
-Fit the Neopixel strands to your sweater. These are large and quite bright, so to be more subtle they can be sewn to the inside of the sweater and glow through, assuming the sweater is thing enough. FOr a chunky knit sweater you can loop these through the knit with the LEDs on the outside, and wiring on the inside.
+Fit the Neopixel strands to your sweater. These are large and quite bright, so to be more subtle they can be sewn to the inside of the sweater and glow through, assuming the sweater is thing enough. For a chunky knit sweater you can loop these through the knit with the LEDs on the outside, and wiring on the inside.
 
 Ensure the male connector (the one with the three pins) is near the bottom of the sweater.
 
@@ -97,25 +97,25 @@ Ensure the male connector (the one with the three pins) is near the bottom of th
 
 Neopixel strands take more power than can be provided by the Pi directly (although a Pi can provide enough power for 3 or so pixels for testing), so they need an additional power source. They run off 5v, so can be powered by AA batteries. You need 4 rechargeable batteries - rechargeables only provide 1.2v, not the 1.5v of a non-rechargeable, so 4 x 1.2v = 4.8v, enough to power the whole strand.
 
-Connect the -ve (black) lead from the batter pack to 2 jumper wires. I did this by soldering a pin to the end of the wire from the battery box, removing the plastic covering around the male end of a female-to-male jumper lead and pushing the pin into the wire end of the jumper. This gave me a male end, with the battery lead connected which I could then plug into a female-to-female jumper lead. This means I have 2 female connections available from my negative wire.
+1. Connect the negative (black) lead from the batter pack to 2 jumper wires. Do this by soldering a pin to the end of the wire from the battery box, removing the plastic covering around the male end of a female-to-male jumper lead and pushing the pin into the wire end of the jumper. This gives a male end, with the battery lead connected which can then plug into a female-to-female jumper lead. This gives 2 female connections available from the negative wire.
 
-![The negative wire from the battery connected to two female jumper leads](./images/negativewire.jpeg)
+    ![The negative wire from the battery connected to two female jumper leads](./images/negativewire.jpeg)
 
-The +ve (red) lead I soldered to a pin and connected to a female-to-female jumper lead.
+1. Solder the positive (red) lead to a pin and connected to a female-to-female jumper lead.
 
-![The positive wire soldered to a pin and connected to a female to female jumper lead](./images/positivewire.jpeg)
+    ![The positive wire soldered to a pin and connected to a female to female jumper lead](./images/positivewire.jpeg)
 
-The +ve connection needs to be connected to the +ve input on the Neopixel strands. The male end of this has 3 pins - the outside ones are power, the inside one is the control pin. If you look at the 3 wires connected to the plug, one will have a red line along it. This is the +ve wire and needs to be connected to the +ve wire from the battery pack. The -ve side connects to one of the -ve jumpers.
+1. The positive connection needs to be connected to the positive input on the Neopixel strands. The male end of this has 3 pins - the outside ones are power, the inside one is the control pin. If you look at the 3 wires connected to the plug, one will have a red line along it. This is the positive wire and needs to be connected to the positive wire from the battery pack. The negative side connects to one of the negative jumpers.
 
-![Power leads connected to the pixel strand](./images/powertopixel.jpeg)
+    ![Power leads connected to the pixel strand](./images/powertopixel.jpeg)
 
-The other -ve power connection needs to connect to the ground pin on the Pi. If the Pi is positioned with the SD card at the top, the ground pin is the third pin down on the right-hand line of pins.
+1. The other negative power connection needs to connect to the ground pin on the Pi. If the Pi is positioned with the SD card at the top, the ground pin is the third pin down on the right-hand line of pins.
 
-![The negative lead connected to the 3rd pin down on the pi](./images/NegativeOnPi.jpeg)
+    ![The negative lead connected to the 3rd pin down on the pi](./images/NegativeOnPi.jpeg)
 
-Finally connected the data pin on the Neopixel strand (the center pin), to the GPIO pin 18 on the Pi. If the Pi is positioned with the SD card at the top, the GPIO pin 18 is the sixth pin down on the right-hand line of pins.
+1. Finally connected the data pin on the Neopixel strand (the center pin), to the GPIO pin 18 on the Pi. If the Pi is positioned with the SD card at the top, the GPIO pin 18 is the sixth pin down on the right-hand line of pins.
 
-![The data lead connected to the 6th pin down on the pi](./images/DataOnPi.jpeg)
+    ![The data lead connected to the 6th pin down on the pi](./images/DataOnPi.jpeg)
 
 ## Controlling the NeoPixels
 
