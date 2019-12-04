@@ -121,7 +121,9 @@ Neopixel strands take more power than can be provided by the Pi directly (althou
 
 The first step is to write a small Python program to control the Neopixels to show they are working. There are some Python libraries you need to install first to provide control of Neopixels. All the code for this will be using Python 3.
 
-1. Install the [RPI.GPIO](https://pypi.org/project/RPi.GPIO/) package:
+### Write the code
+
+1. Install the RPI.GPIO package:
 
     ```sh
     sudo pip3 install RPI.GPIO
@@ -143,8 +145,7 @@ The first step is to write a small Python program to control the Neopixels to sh
 1. Add the following code:
 
     ```python
-    import board
-    import neopixel
+    import board, neopixel
 
     # Define a Neopixel strand of 20 pixels in length connected to GPIO pin 18
     pixels = neopixel.NeoPixel(board.D18, 20)
@@ -166,6 +167,26 @@ The first step is to write a small Python program to control the Neopixels to sh
     ![A single pixel lit up red](./images/OnePixelLit.jpeg)
 
     > This code needs to be run using `sudo` as the hardware access needed by the pixels needs to run with elevated privileges.
+
+### What this code does
+
+```python
+import board, neopixel
+```
+
+This code imports the GPIO board module to access the pins, and the neopixel module needed to control the pixels.
+
+```python
+pixels = neopixel.NeoPixel(board.D18, 20)
+```
+
+This code declares a set of Neopixels 20 pixels long controlled by pin GPIO 18.
+
+```python
+pixels[0] = (255, 0, 0)
+```
+
+This code sets the first pixel (index 0) to red. The colours are set by providing the red, green and blue values from 0 to 255.
 
 ## Configuring IoT Central
 
@@ -274,7 +295,298 @@ Once the template has been created, it can be applied to one or more devices to 
 
     ![The create new device dialog](./images/CreateNewDeviceDialog.png)
 
-## Writing the code to control the sweater from IoT Central
+1. Select the **Connect** button on the top left of the **Devices** tab. Note the **ID Scope**, **Device ID** and **Primary Key**, as you will use these later.
+
+    ![The connect button](./images/ConnectDeviceButton.png)
+
+    ![The device connection details](./images/DeviceConnectionDetails.png)
+
+## Controlling the sweater from IoT Central
+
+The next step is to write the software to control the Neopixels via IoT Central.
+
+### Write the code
+
+There is an Azure IoT Python SDK that can talk to IoT Central and receive these commands.
+
+1. Install the azure-iot-device Pip package
+
+    ```sh
+    sudo pip3 install azure-iot-device
+    ```
+
+1. Install the dotenv Pip package to allow environment files to be used to store the IoT central connection string.
+
+    ```sh
+    sudo pip3 install python-dotenv
+    ```
+
+1. Create a new file called `.env`. This will be used to store the IoT central connection string. These files are special files that can be read and used to set environment variables so that secrets like connection strings don't need to be stored in source code. These files can then be ignored instead of being checked into source code control to keep your secrets safe.
+
+    ```sh
+    nano .env
+    ```
+
+1. Add the following to this file:
+
+    ```sh
+    ID_SCOPE=<your id scope>
+    DEVICE_ID=<your device id>
+    PRIMARY_KEY=<your primary key>
+    ```
+
+    Replace `<your id scope>` with the value of the ID Scope from the connection dialog in IoT Central. Replace `<your device id>` with the device id, and `<your primary key>` with your primary key.
+
+1. Open the `sweater.py` file in nano
+
+    ```sh
+    nano sweater.py
+    ```
+
+1. Delete the existing code
+
+1. Add the following code to this file
+
+    ```python
+    import board, neopixel
+    import os, asyncio, threading, random
+    from dotenv import load_dotenv
+    from azure.iot.device.aio import IoTHubDeviceClient, ProvisioningDeviceClient
+    from azure.iot.device import MethodResponse
+
+    load_dotenv()
+
+    pixel_count = 20
+    pixels = neopixel.NeoPixel(board.D18, pixel_count)
+
+    mode = 'off'
+
+    id_scope = os.getenv('ID_SCOPE')
+    device_id = os.getenv('DEVICE_ID')
+    primary_key = os.getenv('PRIMARY_KEY')
+
+    async def main():
+        # provision the device
+        async def register_device():
+            provisioning_device_client = ProvisioningDeviceClient.create_from_symmetric_key(
+                provisioning_host='global.azure-devices-provisioning.net',
+                registration_id=device_id,
+                id_scope=id_scope,
+                symmetric_key=primary_key,
+            )
+
+            return await provisioning_device_client.register()
+
+        results = await asyncio.gather(register_device())
+        registration_result = results[0]
+
+        # build the connection string
+        conn_str='HostName=' + registration_result.registration_state.assigned_hub + \
+                 ';DeviceId=' + device_id + \
+                 ';SharedAccessKey=' + primary_key
+
+        # The client object is used to interact with your Azure IoT Central.
+        device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
+
+        # connect the client.
+        print('Connecting')
+        await device_client.connect()
+        print('Connected')
+
+        # listen for commands
+        async def command_listener(device_client):
+            global mode
+            while True:
+                method_request = await device_client.receive_method_request()
+                mode = method_request.name
+                print('Mode set:', mode)
+                payload = {'result': True, 'data': mode}
+                method_response = MethodResponse.create_from_method_request(
+                    method_request, 200, payload
+                )
+                await device_client.send_method_response(method_response)
+
+        # async loop that controls the lights
+        async def main_loop():
+            global mode
+            while True:
+                if mode == 'flashing_colours':
+                    for x in range (0, pixel_count):
+                        pixels[x] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                else:
+                    pixels.fill((0, 0, 0))
+                await asyncio.sleep(1)
+
+                print('polling - mode is', mode)
+
+        listeners = asyncio.gather(command_listener(device_client))
+
+        await main_loop()
+
+        # Cancel listening
+        listeners.cancel()
+
+        # Finally, disconnect
+        await device_client.disconnect()
+
+    if __name__ == '__main__':
+        asyncio.run(main())
+    ```
+
+    This code assumes you have created two commands, `flashing_colours` and `off`. Change the code in `main_loop` to provide different light patterns depending on the command received. This code runs every second, so use this timing to loop through the colour sequence you want.
+
+1. Run the code
+
+    ```sh
+    sudo python3 sweater.py
+    ```
+
+    > This code needs to be run using `sudo` as the hardware access needed by the pixels needs to run with elevated privileges.
+
+1. Head to IoT Central, select **Devices** from the left-hand menu, then select your device from the list on the right.
+
+1. Select the **Run** button for a command. You should see this command listed in the output from the running app, and the lights should start to change colour.
+
+    ![The output from the python app showing the mode changing to flashing colours](./images/RunOutput.png)
+
+### What this code does
+
+```python
+import board, neopixel
+import os, asyncio, threading, random
+from dotenv import load_dotenv
+from azure.iot.device.aio import IoTHubDeviceClient, ProvisioningDeviceClient
+from azure.iot.device import MethodResponse
+```
+
+This code imports the modules to control the Neopixels, talk to IoT Central, load `.env` files and use some system modules.
+
+```python
+load_dotenv()
+```
+
+This loads the environment variables from the `.env` file.
+
+```python
+pixel_count = 20
+pixels = neopixel.NeoPixel(board.D18, pixel_count)
+```
+
+This declares a string of 20 Neopixels connected to the GPIO 18 pin.
+
+```python
+mode = 'off'
+```
+
+This defaults the mode to `off`, so the Neopixels start off turned off.
+
+```python
+id_scope = os.getenv('ID_SCOPE')
+device_id = os.getenv('DEVICE_ID')
+primary_key = os.getenv('PRIMARY_KEY')
+```
+
+This loads the ID Scope, Device ID and Primary Key from the `.env` files. These values should be kept secret and not stored in source code.
+
+```python
+async def main():
+    ...
+
+if __name__ == '__main__':
+    asyncio.run(main())
+```
+
+This declares and runs an asynchronous `main` function.
+
+```python
+# provision the device
+async def register_device():
+    provisioning_device_client = ProvisioningDeviceClient.create_from_symmetric_key(
+        provisioning_host='global.azure-devices-provisioning.net',
+        registration_id=device_id,
+        id_scope=id_scope,
+        symmetric_key=primary_key,
+    )
+
+    return await provisioning_device_client.register()
+
+results = await asyncio.gather(register_device())
+registration_result = results[0]
+```
+
+This code uses the Azure IoT Device Provisioning Service to provision the device using the Scope ID, Device ID and Primary Key. It returns a registration result that contains information about the IoT Central instance that can be used by the device to connect.
+
+```python
+# build the connection string
+conn_str='HostName=' + registration_result.registration_state.assigned_hub + \
+            ';DeviceId=' + device_id + \
+            ';SharedAccessKey=' + primary_key
+```
+
+Once the device has been provisioned, the result is used to build a connection string that will be used to connect to IoT Central.
+
+```python
+# The client object is used to interact with your Azure IoT Central.
+device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
+
+# connect the client
+print('Connecting')
+await device_client.connect()
+print('Connected')
+```
+
+This code connects to IoT Central.
+
+```python
+# listen for commands
+async def command_listener(device_client):
+    global mode
+    while True:
+        method_request = await device_client.receive_method_request()
+        mode = method_request.name
+        print('Mode set:', mode)
+        payload = {'result': True, 'data': mode}
+        method_response = MethodResponse.create_from_method_request(
+            method_request, 200, payload
+        )
+        await device_client.send_method_response(method_response)
+```
+
+This asynchronous function listens for method requests from IoT Central - these are the underlying mechanism by which commands are sent. When a method is received, the name is extracted and this is the **name** of the command. This name is stored in the `mode`, and an acknowledgement is sent back to IoT Central.
+
+```python
+# async loop that controls the lights
+async def main_loop():
+    global mode
+    while True:
+        if mode == 'flashing_colours':
+            for x in range (0, pixel_count):
+                pixels[x] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        else:
+            pixels.fill((0, 0, 0))
+        await asyncio.sleep(1)
+
+        print('polling - mode is', mode)
+```
+
+This is an infinite loop that checks the `mode` and updates the lights based off the `mode`. If the mode is `flashing_colours`, then the lights are set to random colours, otherwise the lights are turned off. This method then sleeps for 1 second and checks again. This is where you can add other modes for different commands.
+
+```python
+listeners = asyncio.gather(command_listener(device_client))
+await main_loop()
+```
+
+This code starts the listeners and the main loop.
+
+```python
+# Cancel listening
+listeners.cancel()
+
+# Finally, disconnect
+await device_client.disconnect()
+```
+
+Once the main loop exits this code ends the listener and disconnects from IoT Central.
 
 ## Starting the code on boot
 
@@ -299,6 +611,8 @@ Ideally we want the software for the sweater running as soon as the Pi boots up.
 Next time the Pi reboots it will launch the Python file and allow you to control the Neopixels.
 
 ## Controlling the sweater from Twitter
+
+
 
 ## Learn more
 
