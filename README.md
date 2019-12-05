@@ -237,11 +237,11 @@ If you want to wear your sweater for more than 7 days then you will need an Azur
 
 IoT central defines templates for each kind of device that will be configured to connect to it. These templates define an interface for how IoT central can talk to the device, and this interface includes properties that can be set on the device, commands that can be sent to it, and telemetry received from the device. For this sweater we want to allow commands to be sent to the device to control the Neopixels.
 
-1. From the left-hand menu, select **Device templates**, then click **+ New**.
+1. From the left-hand menu, select **Device templates**, then select **+ New**.
 
     ![The new template button](./images/NewDeviceTemplate.png)
 
-1. Select **IoT device** from the **Create a custom device template** section. Then click **Customize**.
+1. Select **IoT device** from the **Create a custom device template** section. Then select **Customize**.
 
     ![The select template type screen](./images/SelectTemplateType.png)
 
@@ -291,7 +291,7 @@ Once the template has been created, it can be applied to one or more devices to 
 
     ![The new device button](./images/NewDevice.png)
 
-1. Set the **Device ID** and **Device name** for your sweater. The **Device ID** cannot have spaces as this is used in the connection details. Then click **Create**. This will create a device associated with the *Ugly sweater* template.
+1. Set the **Device ID** and **Device name** for your sweater. The **Device ID** cannot have spaces as this is used in the connection details. Then select **Create**. This will create a device associated with the *Ugly sweater* template.
 
     ![The create new device dialog](./images/CreateNewDeviceDialog.png)
 
@@ -612,7 +612,33 @@ Next time the Pi reboots it will launch the Python file and allow you to control
 
 ## Controlling the sweater from Twitter
 
+As well as providing a low barrier to entry way to build your IoT apps, IoT Central is also controllable via logic apps. These are no-code apps that can be triggered by all manner of different things and run applications built using drag and drop programming.
 
+Logic apps are slightly outside the scope of this post, so the best place to start is the [Introduction to Azure Logic Apps learning path on Microsoft Learn](https://docs.microsoft.com/learn/modules/intro-to-logic-apps/?WT.mc_id=iotuglysweater-github-jabenn).
+
+One of the available connections is for IoT Central. You can add triggers or actions that interact with your IoT Central application. Once you add an action or a trigger, there will be an option to sign in.
+
+1. Create a trigger of your choice - for example the **When a new tweet is posted** trigger. Log into Twitter when prompted, and configure this how you want.
+
+1. Add an action to trigger a command, such as the `flashing_colours` command. To create this, add a **Run a command** action.
+
+1. Select the **Sign in** button and sign in to IoT Central.
+
+1. At the moment, applications are not populated correctly to the **Application** field, so you will need to set a custom value. You can get the application id from IoT Central, from the **Administration** menu item in the **Application settings** section.
+
+    ![The application id](./images/ApplicationId.png)
+
+1. Once the application id is set, the **Device template** list should populate, so select the *Ugly sweater* device template.
+
+1. Once the device template is set, the **Command** list will populate, so select teh *Flashing Colours* command.
+
+1. Set the **Device** to be the id of your device.
+
+    ![The configured run a command action](./images/RunACommandAction.png)
+
+1. Save the logic app.
+
+1. Send a tweet matching the criteria in the action, and your sweater should respond.
 
 ## Learn more
 
