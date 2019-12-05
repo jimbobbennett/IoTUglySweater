@@ -8,6 +8,8 @@ It's holiday season, and that time of year where Ugly Sweaters become the top fa
 
 This repo has all the instructions on how to build and power your own IoT ugly sweater using low priced hardware and the power of the cloud. The sweater will light up, with the lights controlled via the cloud - either from an online dashboard or by sending a tweet!
 
+You can find the full code for this project in the [code](./tree/master/code) folder.
+
 ## What you need
 
 To build one of these sweaters, you will need the following hardware.
