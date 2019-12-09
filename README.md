@@ -1,10 +1,10 @@
 # IoT Ugly Sweater
 
-It's holiday season, and that time of year where Ugly Sweaters become the top fashion item. And the only thing better than an ugly sweater, is an IoT ugly sweater. As seen on the [IoT Show](https://youtu.be/KiG7kR95hIQ) on [Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/?WT.mc_id=iotuglysweater-github-jabenn)!
+It's holiday season, and that time of year where Ugly Sweaters become the top fashion item. And the only thing better than an ugly sweater, is an IoT ugly sweater. As seen on the [IoT Show Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)!
 
-**Watch the show [here](https://youtu.be/KiG7kR95hIQ)**
+**Watch the show [here](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)**
 
-[![Two people wearing ugly sweaters with lights on](./images/UglySweaters.png)](https://youtu.be/KiG7kR95hIQ "The IoT Show")
+[![Two people wearing ugly sweaters with lights on](./images/UglySweaters.png)](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn "The IoT Show")
 
 This repo has all the instructions on how to build and power your own IoT ugly sweater using low priced hardware and the power of the cloud. The sweater will light up, with the lights controlled via the cloud - either from an online dashboard or by sending a tweet!
 
