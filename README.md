@@ -1,10 +1,10 @@
 # IoT Ugly Sweater
 
-It's holiday season, and that time of year where Ugly Sweaters become the top fashion item. And the only thing better than an ugly sweater, is an IoT ugly sweater. As seen on the [IoT Show Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)!
+It's holiday season, and that time of year where Ugly Sweaters become the top fashion item. And the only thing better than an ugly sweater, is an IoT ugly sweater. As seen on the [IoT Show Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=academic-0000-jabenn)!
 
-**Watch the show [here](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)**
+**Watch the show [here](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=academic-0000-jabenn)**
 
-[![Two people wearing ugly sweaters with lights on](./images/UglySweaters.png)](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn "The IoT Show")
+[![Two people wearing ugly sweaters with lights on](./images/UglySweaters.png)](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=academic-0000-jabenn "The IoT Show")
 
 This repo has all the instructions on how to build and power your own IoT ugly sweater using low priced hardware and the power of the cloud. The sweater will light up, with the lights controlled via the cloud - either from an online dashboard or by sending a tweet!
 
@@ -23,11 +23,11 @@ To build one of these sweaters, you will need the following hardware.
 
 (**starred links are affiliate links*)
 
-This build requires a small amount of programming in Python. It will use [IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=iotuglysweater-github-jabenn) to connect to the cloud and allow your sweater to be controlled over the internet.
+This build requires a small amount of programming in Python. It will use [IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=academic-0000-jabenn) to connect to the cloud and allow your sweater to be controlled over the internet.
 
-> If you want to read more on IoT Central, check out the [documentation](https://docs.microsoft.com/azure/iot-central/?WT.mc_id=iotuglysweater-github-jabenn).
+> If you want to read more on IoT Central, check out the [documentation](https://docs.microsoft.com/azure/iot-central/?WT.mc_id=academic-0000-jabenn).
 >
-> For hands-on learning, check out the IoT Central modules on [Microsoft Learn](https://docs.microsoft.com/learn/browse/?roles=administrator%2Cdeveloper&products=azure-iot-central&WT.mc_id=iotuglysweater-github-jabenn).
+> For hands-on learning, check out the IoT Central modules on [Microsoft Learn](https://docs.microsoft.com/learn/browse/?roles=administrator,developer&products=azure-iot-central&WT.mc_id=academic-0000-jabenn).
 
 ## The build
 
@@ -200,13 +200,13 @@ You can use a 7 day free trial for up to 5 devices without signing up for an Azu
 
 If you want to wear your sweater for more than 7 days then you will need an Azure subscription.
 
-* Students can sign up at [aka.ms/FreeStudentAzure](https://azure.microsoft.com/free/students/?WT.mc_id=iotuglysweater-github-jabenn) using a valid higher education email address. You won't need a credit card and will get US$100 to use for 12 months, as well as 12 months of free services. After 12 months if you are still a student you can renew for another 12 months and get another $100 and free services, and so on each year you are still a student.
+* Students can sign up at [aka.ms/FreeStudentAzure](https://azure.microsoft.com/free/students/?WT.mc_id=academic-0000-jabenn) using a valid higher education email address. You won't need a credit card and will get US$100 to use for 12 months, as well as 12 months of free services. After 12 months if you are still a student you can renew for another 12 months and get another $100 and free services, and so on each year you are still a student.
 
-* If you are not a student you can sign up at [aka.ms/FreeAz](https://azure.microsoft.com/free/?WT.mc_id=iotuglysweater-github-jabenn). You will need a credit card to verify you are not a bot (you won't be charged anything), and wil get US$200 for 30 days, as well as 12 months of free services.
+* If you are not a student you can sign up at [aka.ms/FreeAz](https://azure.microsoft.com/free/?WT.mc_id=academic-0000-jabenn). You will need a credit card to verify you are not a bot (you won't be charged anything), and wil get US$200 for 30 days, as well as 12 months of free services.
 
 ### Create an IoT central application
 
-1. Head to [AzureIoTCentral.com](https://azure.microsoft.com/services/iot-central/?WT.mc_id=iotuglysweater-github-jabenn)
+1. Head to [AzureIoTCentral.com](https://azure.microsoft.com/services/iot-central/?WT.mc_id=academic-0000-jabenn)
 
 1. Select **Build a solution**
 
@@ -616,7 +616,7 @@ Next time the Pi reboots it will launch the Python file and allow you to control
 
 As well as providing a low barrier to entry way to build your IoT apps, IoT Central is also controllable via logic apps. These are no-code apps that can be triggered by all manner of different things and run applications built using drag and drop programming.
 
-Logic apps are slightly outside the scope of this post, so the best place to start is the [Introduction to Azure Logic Apps learning path on Microsoft Learn](https://docs.microsoft.com/learn/modules/intro-to-logic-apps/?WT.mc_id=iotuglysweater-github-jabenn).
+Logic apps are slightly outside the scope of this post, so the best place to start is the [Introduction to Azure Logic Apps learning path on Microsoft Learn](https://docs.microsoft.com/learn/modules/intro-to-logic-apps/?WT.mc_id=academic-0000-jabenn).
 
 One of the available connections is for IoT Central. You can add triggers or actions that interact with your IoT Central application. Once you add an action or a trigger, there will be an option to sign in.
 
@@ -644,6 +644,6 @@ One of the available connections is for IoT Central. You can add triggers or act
 
 ## Learn more
 
-If you want to read more on IoT Central, check out the [documentation](https://docs.microsoft.com/azure/iot-central/?WT.mc_id=iotuglysweater-github-jabenn).
+If you want to read more on IoT Central, check out the [documentation](https://docs.microsoft.com/azure/iot-central/?WT.mc_id=academic-0000-jabenn).
 
-For hands-on learning, check out the IoT Central modules on [Microsoft Learn](https://docs.microsoft.com/learn/browse/?roles=administrator%2Cdeveloper&products=azure-iot-central&WT.mc_id=iotuglysweater-github-jabenn).
+For hands-on learning, check out the IoT Central modules on [Microsoft Learn](https://docs.microsoft.com/learn/browse/?roles=administrator,developer&products=azure-iot-central&WT.mc_id=academic-0000-jabenn).
