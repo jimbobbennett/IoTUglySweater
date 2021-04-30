@@ -1,5 +1,8 @@
 # IoT Ugly Sweater
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](/LICENSE)
+[![Twitter: jimbobbennett](https://img.shields.io/twitter/follow/jimbobbennett.svg?style=social)](https://twitter.com/jimbobbennett)
+
 It's holiday season, and that time of year where Ugly Sweaters become the top fashion item. And the only thing better than an ugly sweater, is an IoT ugly sweater. As seen on the [IoT Show Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)!
 
 **Watch the show [here](https://channel9.msdn.com/Shows/Internet-of-Things-Show/IoT-is-Fun-for-Everyone-Ugly-Sweater-Edition/?WT.mc_id=iotuglysweater-github-jabenn)**
